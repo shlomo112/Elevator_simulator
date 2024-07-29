@@ -1,8 +1,9 @@
+import { Floor } from "./Floor";
 
 export class Elevator {
   public currentFloor: number = 0;
-  private targetFloors: number[] = [];
-  private moving: boolean = false;
+  public targetFloors: Floor[] = [];
+  public moving: boolean = false;
   private element: HTMLElement;
   private ding: HTMLAudioElement;
 
@@ -17,32 +18,49 @@ export class Elevator {
     return this.element;
   }
 
-  public moveToFloor(floor: number, callback: () => void): void {
+  public call(floor: Floor): void {
     this.targetFloors.push(floor);
-    if (!this.moving) {
-      this.processNextFloor(callback);
+    if(!this.moving){
+      this.moveToFloor();
     }
   }
 
-  private processNextFloor(callback: () => void): void {
+  private moveToFloor(): void {
     if (this.targetFloors.length === 0) {
-      this.moving = false;
       return;
     }
     
-    this.moving = true;
-    const nextFloor = this.targetFloors.shift()!;
-    const distance = Math.abs(this.currentFloor - nextFloor);
-    const travelTime = distance * 500; // 500ms per floor
+    const nextFloor = this.targetFloors[0].floorNumber;
+    const travelTime = Math.abs(this.currentFloor - nextFloor) * 500;
+    this.animateMovement(nextFloor,travelTime);
 
-    this.element.style.transform = `translateY(-${nextFloor * 117}px)`;
+    this.currentFloor = nextFloor;
+    
     setTimeout(() => {
-      this.currentFloor = nextFloor;
+      this.targetFloors.shift()!;
       this.ding.play();
+      
       setTimeout(() => {
-        callback();
-        this.processNextFloor(callback);
-      }, 2000); // 2 seconds delay at the floor
+        this.moveToFloor();
+      }, 2000);
+      
     }, travelTime);
+  }
+  
+  public calculateTravelTime(newFloor:Floor){
+    let arrivalTime = 0;
+    if(this.targetFloors.length > 0){
+      const remainingTime = this.targetFloors[this.targetFloors.length - 1].timer.remainingTime;
+      arrivalTime += remainingTime + 2;
+      arrivalTime += Math.abs(this.currentFloor - newFloor.floorNumber) * 0.5;
+    } else {
+      arrivalTime = Math.abs(this.currentFloor - newFloor.floorNumber) * 0.5;
+    }
+    return arrivalTime;  
+  }
+  
+  private animateMovement(nextFloor:number, travelTime:number): void {
+    this.element.style.transition = `${travelTime}ms linear`
+    this.element.style.transform = `translateY(-${nextFloor * 117}px)`;
   }
 }

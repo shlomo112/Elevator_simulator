@@ -1,16 +1,20 @@
+import { Floor } from "./Floor";
+
 export class CallButton {
     private buttonElement: HTMLButtonElement;
   
-    constructor(private floorNumber: number, private callElevator: (floor: number) => void) {
+    constructor(private floor:Floor) {
       this.buttonElement = document.createElement('button');
       this.buttonElement.classList.add('metal', 'linear');
-      this.buttonElement.textContent = floorNumber.toString();
-      this.buttonElement.onclick = () => {
+      this.buttonElement.textContent = floor.floorNumber.toString();
+      this.buttonElement.addEventListener('click', this.handleClick.bind(this));
+    };
+
+    private handleClick(): void {
         this.buttonElement.style.color = 'green';
-        this.callElevator(this.floorNumber);
-      };
-    }
-  
+        this.floor.callElevator();
+    };
+    
     public getElement(): HTMLButtonElement {
       return this.buttonElement;
     }

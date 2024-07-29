@@ -1,31 +1,38 @@
 export class Timer {
     private countdownElement: HTMLElement;
+    public remainingTime: number = 0;
   
     constructor() {
-      this.countdownElement = document.createElement('label');
+      this.countdownElement = document.createElement('div');
+      this.countdownElement.classList.add('timer')
     }
   
     public getElement(): HTMLElement {
       return this.countdownElement;
     }
-  
+    
+    private updateDisplay():void {
+      this.countdownElement.textContent = this.remainingTime.toFixed(1);
+      this.countdownElement.style.display = this.remainingTime > 0 ? 'block' : 'none';
+    }
     public startCountdown(time: number, onComplete: () => void): void {
-      let remainingTime = time;
-      this.countdownElement.textContent = remainingTime.toString();
-  
+      if(time > 0){ 
+      this.remainingTime = time;
+      this.updateDisplay();
+      
       const interval = setInterval(() => {
-        remainingTime--;
-        this.countdownElement.textContent = remainingTime.toString();
-        if (remainingTime <= 0) {
-          clearInterval(interval);
-          this.reset();
+        if (this.remainingTime <= 0.5) {
+          clearInterval(interval);  
           onComplete();
         }
-      }, 1000);
+        this.remainingTime -= 0.5;
+        this.countdownElement.textContent = this.remainingTime.toString();
+      }, 500);
     }
-  
+  }
     public reset(): void {
       this.countdownElement.textContent = '';
+      this.getElement().style.display = 'none';
     }
   }
   

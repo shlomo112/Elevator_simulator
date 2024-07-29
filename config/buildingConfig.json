@@ -1,0 +1,10 @@
+{
+    "buildings": [
+        {"floorsNumber": 10,
+        "elevatorsNumber": 2
+        },
+        {"floorsNumber": 16,
+        "elevatorsNumber": 3
+        }
+    ]
+}
