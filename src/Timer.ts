@@ -15,6 +15,7 @@ export class Timer {
       this.countdownElement.textContent = this.remainingTime.toFixed(1);
       this.countdownElement.style.display = this.remainingTime > 0 ? 'block' : 'none';
     }
+    
     public startCountdown(time: number, onComplete: () => void): void {
       if(time > 0){ 
       this.remainingTime = time;
@@ -30,6 +31,7 @@ export class Timer {
       }, 500);
     }
   }
+    
     public reset(): void {
       this.countdownElement.textContent = '';
       this.getElement().style.display = 'none';

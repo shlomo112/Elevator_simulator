@@ -13,11 +13,9 @@ export class Floor {
     this.number = floorNumber;
     this.element = document.createElement('div');
     this.element.classList.add('floor');
-    
     this.callButton = new CallButton(this);
     this.timer = new Timer();
     this.building = building;
-
     this.element.appendChild(this.callButton.getElement());
   }
 
@@ -25,7 +23,6 @@ export class Floor {
     return this.element;
   }
 
-  
   public callElevator(): void {
     if(this.elevatorIsrHere() || this.elevatorIsComing()){
       this.callButton.reset()
@@ -42,7 +39,7 @@ export class Floor {
   private showTimer(time: number): void {
     this.element.appendChild(this.timer.getElement());
     this.timer.startCountdown(time, this.handleArrival.bind(this));
-}
+  }
 
   private handleArrival(): void {
     this.callButton.reset();
@@ -50,8 +47,8 @@ export class Floor {
   }
 
   private elevatorIsrHere(): boolean {
-    for (const elevator of this.building.elevators){
-      if(elevator.currentFloor === this.number){
+    for (const elevator of this.building.elevators) {
+      if(elevator.currentFloor === this.number) {
         return true;
       }
     }

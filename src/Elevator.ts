@@ -3,10 +3,8 @@ import { Floor } from "./Floor";
 export class Elevator {
   public currentFloor: number = 0;
   public targetFloors: Floor[] = [];
-  public moving: boolean = false;
   private element: HTMLElement;
   private ding: HTMLAudioElement;
-
 
   constructor(public id: number) {
     this.element = document.createElement('div');
@@ -20,7 +18,7 @@ export class Elevator {
 
   public call(floor: Floor): void {
     this.targetFloors.push(floor);
-    if(!this.moving){
+    if(this.targetFloors.length > 0) {
       this.moveToFloor();
     }
   }
@@ -29,13 +27,11 @@ export class Elevator {
     if (this.targetFloors.length === 0) {
       return;
     }
-    
     const nextFloor = this.targetFloors[0].floorNumber;
     const travelTime = Math.abs(this.currentFloor - nextFloor) * 500;
     this.animateMovement(nextFloor,travelTime);
 
     this.currentFloor = nextFloor;
-    
     setTimeout(() => {
       this.targetFloors.shift()!;
       this.ding.play();
@@ -43,7 +39,6 @@ export class Elevator {
       setTimeout(() => {
         this.moveToFloor();
       }, 2000);
-      
     }, travelTime);
   }
   
@@ -60,7 +55,7 @@ export class Elevator {
   }
   
   private animateMovement(nextFloor:number, travelTime:number): void {
-    this.element.style.transition = `${travelTime}ms linear`
+    this.element.style.transition = `${travelTime}ms linear`;
     this.element.style.transform = `translateY(-${nextFloor * 117}px)`;
   }
 }

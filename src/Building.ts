@@ -2,7 +2,6 @@ import { ElevatorFactory } from './ElevatorFactory';
 import { Elevator } from './Elevator';
 import { Floor } from './Floor';
 
-
 export class Building {
   public elevators: Elevator[];
   private floors: Floor[];
@@ -16,8 +15,6 @@ export class Building {
     this.initializeFloors(numFloors);
     this.initializeElevators(numElevators);
   }
-
-
 
   private initializeElevators(numElevators:number) {
     const elevatorsElement = document.createElement('div');
@@ -44,7 +41,6 @@ export class Building {
     }
   }
   
-  
   public findNearestAvailableElevator(floor: Floor): Elevator | null {
     let nearestElevator: Elevator | null = null;
     let minTime = Infinity;
@@ -56,7 +52,6 @@ export class Building {
         minTime = time;
       }
     } 
-    
     return nearestElevator;
   }   
 }

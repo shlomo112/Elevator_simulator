@@ -13,7 +13,7 @@ export class CallButton {
     private handleClick(): void {
         this.buttonElement.style.color = 'green';
         this.floor.callElevator();
-    };
+    };  
     
     public getElement(): HTMLButtonElement {
       return this.buttonElement;
