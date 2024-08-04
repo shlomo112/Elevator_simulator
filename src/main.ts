@@ -8,12 +8,14 @@ class InitializeSystem {
     this.buildingSetup = new BuildingSetup;
   }
 
+  // Initialize elevator simulation system from config file and 'addButton' for new building
   initialize() {
     const addButton = document.getElementById('add-button');
     addButton?.addEventListener('click', this.buildingSetup.newBuildingConfig.bind(this.buildingSetup));
     this.addFirstBuilding();
   }
 
+  // Add building from config file
   addFirstBuilding() {
     buildingConfig.buildings.forEach((buildingConfig: {floorsNumber:number, elevatorsNumber:number}) => {
       this.buildingSetup.addBuilding(buildingConfig.floorsNumber, buildingConfig.elevatorsNumber)
@@ -23,15 +25,3 @@ class InitializeSystem {
 
 const initializeSystem =  new InitializeSystem();
 initializeSystem.initialize();
-
-
-
-
-
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   config.forEach((buildingConfig) => {
-//     new Building(buildingConfig.numberOfFloors, buildingConfig.numberOfElevator);
-// });
-// });

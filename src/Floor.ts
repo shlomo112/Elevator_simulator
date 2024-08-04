@@ -19,10 +19,12 @@ export class Floor {
     this.element.appendChild(this.callButton.getElement());
   }
 
+  // Returns a div element representing the floor
   public getElement(): HTMLElement {
     return this.element;
   }
 
+  // Requests the nearest elevator to this floor after validating tha no elevator in floor
   public callElevator(): void {
     if(this.elevatorIsrHere() || this.elevatorIsComing()){
       this.callButton.reset()
@@ -36,16 +38,18 @@ export class Floor {
     }
   }
   
+  // Displaying the timer element after calling the elevator 
   private showTimer(time: number): void {
     this.element.appendChild(this.timer.getElement());
     this.timer.startCountdown(time, this.handleArrival.bind(this));
   }
-
+  // Handle floor actions when elevator arrives
   private handleArrival(): void {
     this.callButton.reset();
     this.timer.reset();
   }
-
+  
+  // Check if elevator is already in floor
   private elevatorIsrHere(): boolean {
     for (const elevator of this.building.elevators) {
       if(elevator.currentFloor === this.number) {
@@ -54,7 +58,8 @@ export class Floor {
     }
     return false;
   }
-
+  
+  // Check if there is any elevator coming to this floor 
   private elevatorIsComing(): boolean {
     for(const elevator of this.building.elevators) {
       for(const floor of elevator.targetFloors){

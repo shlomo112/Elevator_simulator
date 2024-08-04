@@ -16,6 +16,7 @@ export class Building {
     this.initializeElevators(numElevators);
   }
 
+  // Initialize a given amount of elevators and setting its display
   private initializeElevators(numElevators:number) {
     const elevatorsElement = document.createElement('div');
     elevatorsElement.classList.add('elevators-container');
@@ -27,7 +28,8 @@ export class Building {
       this.buildingElement.appendChild(elevatorsElement);
     }
   }  
-
+  
+  // Initialize a given amount of floors and setting its display
   private initializeFloors(numFloors:number) {
     const floorsElement = document.createElement('div');
     floorsElement.classList.add('floors-container');
@@ -37,10 +39,10 @@ export class Building {
       this.floors.push(floor);
       floorsElement.appendChild(floor.getElement());
       this.buildingElement.appendChild(floorsElement);
-
     }
   }
   
+  // Determines and returns the nearest elevator to send to a chosen floor
   public findNearestAvailableElevator(floor: Floor): Elevator | null {
     let nearestElevator: Elevator | null = null;
     let minTime = Infinity;
